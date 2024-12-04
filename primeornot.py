@@ -15,6 +15,7 @@ def prime():
     for i in range(2,n+1//2):
         if n%i==0:
             m=m+1
+            break
     if m==0:
         print(f"{n} is a prime")
     else:
