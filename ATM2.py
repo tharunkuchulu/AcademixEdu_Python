@@ -48,26 +48,32 @@ def find_by_account_number(customers, account_number):
 
 def menu(customer):
     while True:
-        print("\n1. Check account balance\n2. Deposit money\n3. Withdraw money\n4. Change PIN\n5. Exit")
-        choice = int(input("Enter your choice: "))
-        if choice == 1:
-            print(customer.check_balance())
-        elif choice == 2:
-            amount = float(input("Enter the amount you want to deposit: "))
-            print(customer.deposit(amount))
-        elif choice == 3:
-            amount = float(input("Enter the amount you want to withdraw: "))
-            pin = int(input("Enter your PIN: "))
-            print(customer.withdraw(amount, pin))
-        elif choice == 4:
-            pin = int(input("Enter your current PIN: "))
-            new_pin = int(input("Enter the new PIN: "))
-            print(customer.change_pin(pin, new_pin))
-        elif choice == 5:
-            print("Thank you for using the ATM. Goodbye!")
+        try:
+            print("\n1. Check account balance\n2. Deposit money\n3. Withdraw money\n4. Change PIN\n5. Exit")
+            choice = int(input("Enter your choice: "))
+            if choice == 1:
+                print(customer.check_balance())
+            elif choice == 2:
+                amount = float(input("Enter the amount you want to deposit: "))
+                print(customer.deposit(amount))
+            elif choice == 3:
+                amount = float(input("Enter the amount you want to withdraw: "))
+                pin = int(input("Enter your PIN: "))
+                print(customer.withdraw(amount, pin))
+            elif choice == 4:
+                pin = int(input("Enter your current PIN: "))
+                new_pin = int(input("Enter the new PIN: "))
+                print(customer.change_pin(pin, new_pin))
+            elif choice == 5:
+                print("Thank you for using the ATM. Goodbye!")
+                break
+            else:
+                print("Please select a valid choice.")
+        except ValueError:
+            print("Invalid input. Please enter numbers where required.")
+        except KeyboardInterrupt:
+            print("\nProcess interrupted. Exiting menu.")
             break
-        else:
-            print("Please select a valid choice.")
 
 
 def main():
@@ -81,14 +87,20 @@ def main():
     ]
 
     while True:
-        account_number = int(input("\nEnter your account number: "))
-        customer = find_by_account_number(customers, account_number)
-        if customer:
-            print(f"Welcome, {customer.account_holder}!")
-            menu(customer)
+        try:
+            account_number = int(input("\nEnter your account number: "))
+            customer = find_by_account_number(customers, account_number)
+            if customer:
+                print(f"Welcome, {customer.account_holder}!")
+                menu(customer)
+                break
+            else:
+                print("Invalid account number. Please try again.")
+        except ValueError:
+            print("Invalid input. Please enter a valid account number.")
+        except KeyboardInterrupt:
+            print("\nProcess interrupted. Exiting...")
             break
-        else:
-            print("Invalid account number. Please try again.")
 
 
 if __name__ == "__main__":
